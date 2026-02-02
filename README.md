@@ -1,5 +1,3 @@
-# https://www.turing.com/kb/market-basket-analysis
-
 import pandas as pd
 import os
 from flask import Flask, request, jsonify, render_template, flash, request, redirect, url_for, send_from_directory
