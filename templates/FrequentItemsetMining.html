@@ -1,0 +1,165 @@
+<html>
+<head>
+  <title>DSS - Calculate Item Correlation</title>
+  <meta name="description" content="" charset="utf-8">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+  <!-- MDB JS -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+</head>
+<body>
+  <!--Main Navigation-->
+  <header>
+    <style>
+      #intro {
+        background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+        height: 100vh;
+      }
+
+      /* Height for devices larger than 576px */
+      @media (min-width: 992px) {
+        #intro {
+          margin-top: -58.59px;
+        }
+      }
+
+      .navbar .nav-link {
+        color: #fff !important;
+      }
+    </style>
+
+    <!-- Navbar -->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark d-none d-lg-block" style="z-index: 2000;">
+      <div class="container-fluid">
+        <!-- Navbar brand -->
+        <a class="navbar-brand nav-link" target="_blank" href="/newapp">
+          <strong>DSS</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+          aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarExample01">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="{{ url_for('home') }}">Home</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav d-flex flex-row">
+            <!-- Icons -->
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link" href="https://www.youtube.com/" rel="nofollow"
+                target="_blank">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link" href="https://www.facebook.com/" rel="nofollow" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link" href="https://twitter.com/" rel="nofollow" target="_blank">
+                <i class="fab fa-twitter"></i>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong needs-validation">
+      <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+        <div class="container">
+          <div class="row justify-content-center mt-5">
+            <div class="col-xl-5 col-md-8">
+              <form class="bg-white rounded-5 shadow-5-strong p-5" action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+                <h4 class="text-black text-center fw-bold" >E commerce -DSS</h4>
+                <!-- Checkbox -->
+                <div class="form-check">
+                  <input name='algorithm' type="checkbox" class="form-check-input" value="1" id="validationFormCheck1"  />
+                  <label class="form-check-label" for="validationFormCheck1">FP-Growth</label>
+                </div>
+
+                <!-- Parameter & Metric -->
+                <div class="mt-3 form-label" >
+                  <label for="MinSupportParameter">Minimal Support:</label>
+                  <output id="amount1" name="amount" for="rangeInput1">0.10</output>
+                  <input class="form-range mt-2" type="range" id="rangeInput1" name="rangeInput1" min="0.01" max="1" value="0.10" step="0.01" oninput="amount1.value=rangeInput1.value">                                           
+                </div>
+                <div class="mt-3 form-label" >
+                  <label for="MinSupportParameter">Minimal Threshold:</label>
+                  <output id="amount2" name="amount" for="rangeInput2">0.10</output>
+                  <input class="form-range mt-2" type="range" id="rangeInput2" name="rangeInput2" min="0.01" max="1" value="0.10" step="0.01" oninput="amount2.value=rangeInput2.value">                                           
+                </div>
+                <div class="form-floating mt-3">
+                  <select class="form-select" id="floatingSelectMetric" name="floatingSelectMetric" aria-label="Floating label select example" required>
+                    <option value="">Open this select menu</option>
+                    <option value="support">Support</option>
+                    <option value="confidence">Confidence</option>
+                    <option value="lift">Lift</option>
+                    <option value="leverage">Leverage</option>
+                    <option value="conviction">Conviction</option>
+                  </select>
+                  <label for="floatingSelect">Filter Metric:</label>
+                </div>
+                <div class="form-floating mt-3">
+                  <select class="form-select" id="floatingSelect" name="floatingSelect" aria-label="Floating label select example" required>
+                    <option value="">Open this select menu</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  <label for="floatingSelect">Maximal Itemsets Generation:</label>
+                </div>
+              
+                <!-- File input -->
+                <input class="form-control form-control-lg  mt-3" type = "file" name = "file" required />
+
+                <!-- Submit button -->
+                <!-- <input type = "submit"/> -->
+                <button id="checkBtn" type="submit" class="mt-4 btn btn-primary btn-block">Upload File</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+  <script>
+    $(document).ready(function () {
+        $('#checkBtn').click(function() {
+          checked = $("input[type=checkbox]:checked").length;
+    
+          if(!checked) {
+            alert("You must check at least one checkbox.");
+            return false;
+          }
+    
+        });
+    });
+    
+    </script>
+</body>
+</html>
